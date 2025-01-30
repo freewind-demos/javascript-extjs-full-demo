@@ -23,127 +23,235 @@ Ext.create('Ext.data.Store', {
 
 // 创建主应用界面
 Ext.onReady(function () {
-    new Ext.container.Viewport({
-        layout: 'border',
-        items: [
-            // 顶部标题栏
-            {
-                region: 'north',
-                xtype: 'panel',
-                height: 50,
-                bodyStyle: 'background-color: #1a73e8; color: white; font-size: 20px; padding: 10px;',
-                html: '待办事项管理'
-            },
-            // 左侧导航栏
-            {
-                region: 'west',
-                xtype: 'panel',
-                width: 200,
-                split: true,
-                collapsible: true,
-                title: '导航',
-                layout: 'fit',
-                items: [{
-                    xtype: 'treepanel',
-                    root: {
-                        expanded: true,
-                        children: [
-                            { text: '所有任务', leaf: true, id: 'all' },
-                            { text: '进行中', leaf: true, id: 'inProgress' },
-                            { text: '已完成', leaf: true, id: 'completed' }
-                        ]
-                    },
-                    listeners: {
-                        itemclick: function (view, record) {
-                            var store = Ext.getStore('todoStore');
-                            store.clearFilter();
+    // 定义demo数据模型
+    Ext.define('Demo', {
+        extend: 'Ext.data.Model',
+        fields: ['id', 'text', 'leaf', 'className']
+    });
 
-                            if (record.get('id') !== 'all') {
-                                store.filterBy(function (rec) {
-                                    var status = rec.get('status');
-                                    if (record.get('id') === 'inProgress') {
-                                        return status === '进行中';
-                                    } else if (record.get('id') === 'completed') {
-                                        return status === '已完成';
-                                    }
-                                    return true;
-                                });
-                            }
+    // 创建demo导航树的数据
+    var demoStore = Ext.create('Ext.data.TreeStore', {
+        model: 'Demo',
+        root: {
+            expanded: true,
+            children: [{
+                text: '1. 基础布局组件',
+                expanded: true,
+                children: [{
+                    id: 'panel-demo',
+                    text: 'Panel 面板',
+                    leaf: true,
+                    className: 'PanelDemo'
+                }, {
+                    id: 'container-demo',
+                    text: 'Container 容器',
+                    leaf: true,
+                    className: 'ContainerDemo'
+                }, {
+                    id: 'layout-demo',
+                    text: 'Layouts 布局',
+                    leaf: true,
+                    className: 'LayoutDemo'
+                }]
+            }, {
+                text: '2. 表单组件',
+                expanded: true,
+                children: [{
+                    id: 'form-demo',
+                    text: 'Form 表单',
+                    leaf: true,
+                    className: 'FormDemo'
+                }, {
+                    id: 'field-demo',
+                    text: 'Fields 字段',
+                    leaf: true,
+                    className: 'FieldDemo'
+                }, {
+                    id: 'validation-demo',
+                    text: '表单验证',
+                    leaf: true,
+                    className: 'ValidationDemo'
+                }]
+            }, {
+                text: '3. 数据组件',
+                expanded: true,
+                children: [{
+                    id: 'data-demo',
+                    text: 'Store & Model',
+                    leaf: true,
+                    className: 'DataDemo'
+                }, {
+                    id: 'proxy-demo',
+                    text: 'Proxy & Reader',
+                    leaf: true,
+                    className: 'ProxyDemo'
+                }, {
+                    id: 'grid-demo',
+                    text: 'Grid 表格',
+                    leaf: true,
+                    className: 'GridDemo'
+                }]
+            }, {
+                text: '4. 工具栏和菜单',
+                expanded: true,
+                children: [{
+                    id: 'toolbar-demo',
+                    text: 'Toolbar 工具栏',
+                    leaf: true,
+                    className: 'ToolbarDemo'
+                }, {
+                    id: 'menu-demo',
+                    text: 'Menu 菜单',
+                    leaf: true,
+                    className: 'MenuDemo'
+                }, {
+                    id: 'button-demo',
+                    text: 'Button 按钮',
+                    leaf: true,
+                    className: 'ButtonDemo'
+                }]
+            }, {
+                text: '5. 窗口和对话框',
+                expanded: true,
+                children: [{
+                    id: 'window-demo',
+                    text: 'Window 窗口',
+                    leaf: true,
+                    className: 'WindowDemo'
+                }, {
+                    id: 'messagebox-demo',
+                    text: 'MessageBox 消息框',
+                    leaf: true,
+                    className: 'MessageBoxDemo'
+                }, {
+                    id: 'tooltip-demo',
+                    text: 'Tooltip 提示',
+                    leaf: true,
+                    className: 'TooltipDemo'
+                }]
+            }, {
+                text: '6. 树和列表',
+                expanded: true,
+                children: [{
+                    id: 'tree-demo',
+                    text: 'Tree 树',
+                    leaf: true,
+                    className: 'TreeDemo'
+                }, {
+                    id: 'list-demo',
+                    text: 'List 列表',
+                    leaf: true,
+                    className: 'ListDemo'
+                }]
+            }, {
+                text: '7. 特殊组件',
+                expanded: true,
+                children: [{
+                    id: 'drag-drop-demo',
+                    text: '拖放功能',
+                    leaf: true,
+                    className: 'DragDropDemo'
+                }, {
+                    id: 'chart-demo',
+                    text: '图表组件',
+                    leaf: true,
+                    className: 'ChartDemo'
+                }]
+            }, {
+                text: '8. 工具类',
+                expanded: true,
+                children: [{
+                    id: 'util-demo',
+                    text: '常用工具类',
+                    leaf: true,
+                    className: 'UtilDemo'
+                }, {
+                    id: 'ajax-demo',
+                    text: 'Ajax请求',
+                    leaf: true,
+                    className: 'AjaxDemo'
+                }]
+            }]
+        }
+    });
+
+    // 创建主视图
+    Ext.create('Ext.container.Viewport', {
+        layout: 'border',
+        items: [{
+            region: 'north',
+            xtype: 'panel',
+            height: 50,
+            bodyStyle: {
+                background: '#157fcc',
+                color: 'white',
+                fontSize: '20px',
+                fontWeight: 'bold',
+                padding: '10px'
+            },
+            html: 'ExtJS Components Demo'
+        }, {
+            region: 'west',
+            xtype: 'treepanel',
+            title: 'Demo导航',
+            width: 250,
+            split: true,
+            collapsible: true,
+            store: demoStore,
+            listeners: {
+                itemclick: function (view, record) {
+                    if (record.get('leaf')) {
+                        var contentPanel = Ext.getCmp('content-panel');
+                        var className = record.get('className');
+
+                        // 清除现有内容
+                        contentPanel.removeAll();
+
+                        // 加载新的demo组件
+                        try {
+                            var demoComponent = Ext.create('Demo.' + className);
+                            contentPanel.add(demoComponent);
+                        } catch (e) {
+                            contentPanel.add({
+                                xtype: 'panel',
+                                html: '<div class="demo-description">' +
+                                    '<h2>Demo正在开发中...</h2>' +
+                                    '<p>这个演示组件还未实现。</p>' +
+                                    '</div>'
+                            });
                         }
                     }
-                }]
-            },
-            // 主内容区域
-            {
-                region: 'center',
-                xtype: 'panel',
-                layout: 'fit',
-                items: [{
-                    xtype: 'grid',
-                    store: Ext.getStore('todoStore'),
-                    selModel: {
-                        type: 'rowmodel',
-                        mode: 'SINGLE'
-                    },
-                    columns: [
-                        { text: 'ID', dataIndex: 'id', width: 50 },
-                        { text: '标题', dataIndex: 'title', flex: 1 },
-                        { text: '描述', dataIndex: 'description', flex: 2 },
-                        { text: '状态', dataIndex: 'status', width: 100 },
-                        {
-                            text: '截止日期',
-                            dataIndex: 'dueDate',
-                            width: 120,
-                            renderer: Ext.util.Format.dateRenderer('Y-m-d')
-                        }
-                    ],
-                    tbar: [
-                        {
-                            text: '新建任务',
-                            iconCls: 'x-fa fa-plus',
-                            handler: function () {
-                                Ext.create('TodoWindow', {
-                                    title: '新建任务'
-                                }).show();
-                            }
-                        },
-                        {
-                            text: '编辑任务',
-                            iconCls: 'x-fa fa-edit',
-                            handler: function () {
-                                var grid = this.up('grid');
-                                var selected = grid.getSelection()[0];
-                                if (selected) {
-                                    Ext.create('TodoWindow', {
-                                        title: '编辑任务',
-                                        todoRecord: selected
-                                    }).show();
-                                } else {
-                                    Ext.Msg.alert('提示', '请先选择一个任务');
-                                }
-                            }
-                        },
-                        {
-                            text: '删除任务',
-                            iconCls: 'x-fa fa-trash',
-                            handler: function () {
-                                var grid = this.up('grid');
-                                var selected = grid.getSelection()[0];
-                                if (selected) {
-                                    Ext.Msg.confirm('确认', '确定要删除这个任务吗？', function (btn) {
-                                        if (btn === 'yes') {
-                                            var store = Ext.getStore('todoStore');
-                                            store.remove(selected);
-                                        }
-                                    });
-                                } else {
-                                    Ext.Msg.alert('提示', '请先选择一个任务');
-                                }
-                            }
-                        }
-                    ]
-                }]
+                }
             }
-        ]
+        }, {
+            region: 'center',
+            xtype: 'panel',
+            id: 'content-panel',
+            title: '演示区域',
+            layout: 'fit',
+            bodyPadding: 10,
+            items: [{
+                xtype: 'panel',
+                html: '<div class="demo-description">' +
+                    '<h2>欢迎使用ExtJS组件演示!</h2>' +
+                    '<p>这个演示项目展示了ExtJS中常用组件的用法。</p>' +
+                    '<p>请从左侧选择要查看的组件demo。每个demo都包含了:</p>' +
+                    '<ul>' +
+                    '<li>实际运行的示例</li>' +
+                    '<li>相关代码说明</li>' +
+                    '<li>常见使用场景</li>' +
+                    '<li>最佳实践提示</li>' +
+                    '</ul>' +
+                    '</div>'
+            }]
+        }, {
+            region: 'south',
+            xtype: 'panel',
+            height: 30,
+            bodyStyle: {
+                padding: '5px'
+            },
+            html: '© 2024 ExtJS Components Demo'
+        }]
     });
 }); 
