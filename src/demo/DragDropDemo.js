@@ -80,38 +80,48 @@ Ext.define('Demo.DragDropDemo', {
             width: 200,
             margin: '0 10 0 0',
             bodyPadding: 10,
-            html: '<div class="drag-source">拖动我</div>' +
-                '<div class="drag-source">也可以拖动我</div>',
+            items: [{
+                xtype: 'component',
+                autoEl: {
+                    tag: 'div',
+                    cls: 'drag-source',
+                    html: '拖动我'
+                }
+            }, {
+                xtype: 'component',
+                autoEl: {
+                    tag: 'div',
+                    cls: 'drag-source',
+                    html: '也可以拖动我'
+                }
+            }],
             listeners: {
-                afterrender: function (p) {
-                    console.log('Source panel afterrender');
-                    // 等待面板完全渲染
+                afterrender: function (panel) {
+                    console.log('Source panel rendered');
+
+                    // 等待DOM完全渲染
                     Ext.defer(function () {
-                        var dragSources = p.body.query('.drag-source');
+                        var dragSources = panel.body.query('.drag-source');
                         console.log('Found drag sources:', dragSources.length);
 
                         Ext.Array.each(dragSources, function (el) {
-                            var dragSource = new Ext.drag.Source({
+                            console.log('Creating drag source for:', el.innerHTML);
+                            new Ext.drag.Source({
                                 element: el,
-                                groups: ['basicGroup'],
                                 proxy: {
                                     type: 'placeholder',
                                     cls: 'drag-proxy',
-                                    html: '{text}',
-                                    cursorOffset: [20, 20]
+                                    html: el.innerHTML
                                 },
                                 listeners: {
                                     beforedragstart: function (source, info) {
-                                        console.log('Drag start:', info);
-                                        source.getProxy().setHtml(info.eventTarget.innerHTML);
+                                        var sourceEl = source.getElement().dom;
+                                        console.log('Drag start:', sourceEl.innerHTML);
+                                        source.getProxy().setHtml(sourceEl.innerHTML);
                                         return true;
-                                    },
-                                    dragmove: function (source, info) {
-                                        console.log('Drag move:', info.proxy.current.x, info.proxy.current.y);
                                     }
                                 }
                             });
-                            console.log('Created drag source:', dragSource);
                         });
                     }, 100);
                 }
@@ -121,36 +131,74 @@ Ext.define('Demo.DragDropDemo', {
             title: '目标面板',
             flex: 1,
             bodyPadding: 10,
-            html: '<div class="drop-target" style="border: 2px dashed #ccc; padding: 20px; text-align: center; min-height: 150px;">放置区域</div>',
-            listeners: {
-                afterrender: function (p) {
-                    console.log('Target panel afterrender');
-                    // 等待面板完全渲染
-                    Ext.defer(function () {
-                        var dropTarget = new Ext.drag.Target({
-                            element: p.body.down('.drop-target'),
-                            groups: ['basicGroup'],
-                            validCls: 'drop-target-valid',
-                            invalidCls: 'drop-target-invalid',
-                            listeners: {
-                                dragenter: function (target, info) {
-                                    console.log('Drag enter');
-                                },
-                                dragleave: function (target, info) {
-                                    console.log('Drag leave');
-                                },
-                                drop: function (target, info) {
-                                    console.log('Drop:', info);
-                                    var draggedElement = info.eventTarget;
-                                    var clone = draggedElement.cloneNode(true);
-                                    target.getElement().appendChild(clone);
+            items: [{
+                xtype: 'component',
+                autoEl: {
+                    tag: 'div',
+                    cls: 'drop-target',
+                    style: 'border: 2px dashed #ccc; padding: 20px; text-align: center; min-height: 150px;',
+                    html: '放置区域'
+                },
+                listeners: {
+                    afterrender: function (comp) {
+                        console.log('Drop target rendered');
+
+                        // 等待DOM完全渲染
+                        Ext.defer(function () {
+                            new Ext.drag.Target({
+                                element: comp.el,
+                                validCls: 'drop-target-valid',
+                                invalidCls: 'drop-target-invalid',
+                                listeners: {
+                                    dragenter: function (target, info) {
+                                        console.log('Drag enter');
+                                    },
+                                    dragleave: function (target, info) {
+                                        console.log('Drag leave');
+                                    },
+                                    drop: function (target, info) {
+                                        var sourceEl = info.source.getElement().dom;
+                                        console.log('Drop:', sourceEl.innerHTML);
+
+                                        // 创建新组件
+                                        var newComp = Ext.create('Ext.Component', {
+                                            autoEl: {
+                                                tag: 'div',
+                                                cls: 'drag-source',
+                                                html: sourceEl.innerHTML
+                                            },
+                                            renderTo: comp.el
+                                        });
+
+                                        // 等待新组件渲染完成
+                                        newComp.on('afterrender', function () {
+                                            // 为新组件创建拖动源
+                                            new Ext.drag.Source({
+                                                element: newComp.el,
+                                                proxy: {
+                                                    type: 'placeholder',
+                                                    cls: 'drag-proxy',
+                                                    html: sourceEl.innerHTML
+                                                },
+                                                listeners: {
+                                                    beforedragstart: function (source, info) {
+                                                        var el = source.getElement();
+                                                        if (el && el.dom) {
+                                                            source.getProxy().setHtml(el.dom.innerHTML);
+                                                            return true;
+                                                        }
+                                                        return false;
+                                                    }
+                                                }
+                                            });
+                                        });
+                                    }
                                 }
-                            }
-                        });
-                        console.log('Created drop target:', dropTarget);
-                    }, 100);
+                            });
+                        }, 100);
+                    }
                 }
-            }
+            }]
         }]
     }, {
         title: '2. 列表排序',
@@ -330,6 +378,7 @@ Ext.define('Demo.DragDropDemo', {
                 xtype: 'panel',
                 flex: 1,
                 bodyPadding: 10,
+                itemId: 'cartPanel',
                 html: '<div class="cart-list" style="min-height: 200px; border: 2px dashed #ccc;"></div>'
             }, {
                 xtype: 'toolbar',
@@ -345,12 +394,27 @@ Ext.define('Demo.DragDropDemo', {
             }]
         }],
         listeners: {
-            render: function (panel) {
-                var productList = panel.down('[title=商品列表]');
-                var cartList = panel.down('.cart-list');
-                var totalPrice = panel.down('#totalPrice');
-
+            afterrender: function (panel) {
+                // 等待所有子组件都渲染完成
                 Ext.defer(function () {
+                    var productList = panel.down('[title=商品列表]');
+                    var cartPanel = panel.down('#cartPanel');
+                    var totalPrice = panel.down('#totalPrice');
+
+                    // 确保面板已经渲染完成
+                    if (!productList.body || !cartPanel.body) {
+                        console.warn('Panels not ready yet');
+                        return;
+                    }
+
+                    var cartList = cartPanel.body.down('.cart-list');
+                    if (!cartList) {
+                        console.warn('Cart list element not found');
+                        return;
+                    }
+
+                    console.log('Setting up shopping cart drag-drop');
+
                     var productItems = productList.body.query('.product-item');
                     Ext.Array.each(productItems, function (el) {
                         new Ext.drag.Source({
@@ -363,7 +427,7 @@ Ext.define('Demo.DragDropDemo', {
                             },
                             listeners: {
                                 beforedragstart: function (source, info) {
-                                    source.getProxy().setHtml(info.eventTarget.innerHTML);
+                                    source.getProxy().setHtml(info.element.dom.innerHTML);
                                     return true;
                                 }
                             }
@@ -376,7 +440,7 @@ Ext.define('Demo.DragDropDemo', {
                         invalidCls: 'drop-target-invalid',
                         listeners: {
                             drop: function (target, info) {
-                                var draggedElement = info.eventTarget;
+                                var draggedElement = info.element.dom;
                                 var price = parseFloat(draggedElement.getAttribute('data-price'));
                                 var clone = draggedElement.cloneNode(true);
                                 clone.className = 'cart-item';
@@ -387,7 +451,7 @@ Ext.define('Demo.DragDropDemo', {
                             }
                         }
                     });
-                }, 100);
+                }, 200); // 增加延迟时间以确保渲染完成
             }
         }
     }],
