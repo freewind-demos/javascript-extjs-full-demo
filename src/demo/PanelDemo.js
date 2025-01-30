@@ -1,7 +1,7 @@
 Ext.define('Demo.PanelDemo', {
     extend: 'Ext.panel.Panel',
 
-    title: 'Panel 组件演示',
+    title: 'Panel 面板演示',
 
     layout: {
         type: 'vbox',
@@ -14,80 +14,158 @@ Ext.define('Demo.PanelDemo', {
         xtype: 'panel',
         title: '1. 基本面板',
         margin: '0 0 10 0',
-        html: '这是一个基本的Panel,包含标题、内容区域。'
-    }, {
-        xtype: 'panel',
-        title: '2. 带工具按钮的面板',
-        margin: '0 0 10 0',
-        collapsible: true,
-        tools: [{
-            type: 'refresh',
-            tooltip: '刷新',
-            handler: function () {
-                Ext.Msg.alert('提示', '点击了刷新按钮');
-            }
-        }, {
-            type: 'help',
-            tooltip: '帮助',
-            handler: function () {
-                Ext.Msg.alert('提示', '点击了帮助按钮');
-            }
-        }],
-        html: '这个Panel包含了工具按钮,并且可以折叠/展开。'
-    }, {
-        xtype: 'panel',
-        title: '3. 带工具栏的面板',
-        margin: '0 0 10 0',
-        tbar: [{
-            text: '新建',
-            iconCls: 'x-fa fa-plus',
-            handler: function () {
-                Ext.Msg.alert('提示', '点击了新建按钮');
-            }
-        }, {
-            text: '编辑',
-            iconCls: 'x-fa fa-edit',
-            handler: function () {
-                Ext.Msg.alert('提示', '点击了编辑按钮');
-            }
-        }, '->', {
-            text: '帮助',
-            iconCls: 'x-fa fa-question'
-        }],
-        bbar: {
-            xtype: 'statusbar',
-            defaultText: '就绪'
-        },
-        html: '这个Panel包含了顶部工具栏(tbar)和底部状态栏(bbar)。'
-    }, {
-        xtype: 'panel',
-        title: '4. 嵌套面板',
-        margin: '0 0 10 0',
-        layout: 'hbox',
-        defaults: {
-            flex: 1,
-            margin: '0 5'
-        },
         items: [{
             xtype: 'panel',
-            title: '子面板1',
-            html: '这是嵌套的子面板1'
+            title: '简单面板',
+            width: 300,
+            height: 150,
+            margin: 10,
+            html: '这是一个基本的面板，包含标题和内容。'
         }, {
             xtype: 'panel',
-            title: '子面板2',
-            html: '这是嵌套的子面板2'
+            title: '带图标的面板',
+            width: 300,
+            height: 150,
+            margin: 10,
+            iconCls: 'x-fa fa-star',
+            html: '这个面板在标题栏有一个图标。'
         }]
     }, {
         xtype: 'panel',
-        title: '5. 自定义样式面板',
+        title: '2. 工具按钮',
         margin: '0 0 10 0',
-        frame: true,
-        bodyStyle: {
-            padding: '10px',
-            backgroundColor: '#f5f5f5',
-            border: '1px solid #ddd'
+        items: [{
+            xtype: 'panel',
+            title: '带工具按钮的面板',
+            width: 400,
+            height: 200,
+            margin: 10,
+            collapsible: true,
+            tools: [{
+                type: 'refresh',
+                tooltip: '刷新',
+                handler: function () {
+                    Ext.Msg.alert('提示', '刷新按钮被点击');
+                }
+            }, {
+                type: 'help',
+                tooltip: '帮助',
+                handler: function () {
+                    Ext.Msg.alert('提示', '帮助按钮被点击');
+                }
+            }, {
+                type: 'save',
+                tooltip: '保存',
+                handler: function () {
+                    Ext.Msg.alert('提示', '保存按钮被点击');
+                }
+            }],
+            html: '这个面板在标题栏右侧有工具按钮。'
+        }]
+    }, {
+        xtype: 'panel',
+        title: '3. 折叠面板',
+        margin: '0 0 10 0',
+        items: [{
+            xtype: 'panel',
+            title: '可折叠面板',
+            width: 400,
+            height: 200,
+            margin: 10,
+            collapsible: true,
+            titleCollapse: true,
+            html: '点击标题栏或折叠按钮可以折叠/展开面板。',
+            tools: [{
+                type: 'pin',
+                tooltip: '固定',
+                handler: function (event, target, owner, tool) {
+                    var panel = owner.up('panel');
+                    if (tool.type === 'pin') {
+                        panel.setCollapsible(false);
+                        tool.setType('unpin');
+                        tool.setTooltip('取消固定');
+                    } else {
+                        panel.setCollapsible(true);
+                        tool.setType('pin');
+                        tool.setTooltip('固定');
+                    }
+                }
+            }]
+        }, {
+            xtype: 'panel',
+            title: '动画折叠面板',
+            width: 400,
+            height: 200,
+            margin: 10,
+            collapsible: true,
+            animCollapse: true,
+            html: '这个面板折叠/展开时有动画效果。'
+        }]
+    }, {
+        xtype: 'panel',
+        title: '4. 面板布局',
+        margin: '0 0 10 0',
+        layout: {
+            type: 'hbox',
+            align: 'stretch'
         },
-        html: '<div style="color: #157fcc;">这个Panel使用了自定义样式。</div>'
+        height: 300,
+        defaults: {
+            flex: 1,
+            margin: 10
+        },
+        items: [{
+            xtype: 'panel',
+            title: '左侧面板',
+            bodyPadding: 10,
+            html: '这是左侧面板的内容。'
+        }, {
+            xtype: 'panel',
+            title: '中间面板',
+            bodyPadding: 10,
+            html: '这是中间面板的内容。'
+        }, {
+            xtype: 'panel',
+            title: '右侧面板',
+            bodyPadding: 10,
+            html: '这是右侧面板的内容。'
+        }]
+    }, {
+        xtype: 'panel',
+        title: '5. 自定义样式',
+        margin: '0 0 10 0',
+        items: [{
+            xtype: 'panel',
+            title: '自定义标题样式',
+            width: 400,
+            height: 200,
+            margin: 10,
+            headerPosition: 'left',
+            header: {
+                titlePosition: 0,
+                titleRotation: 0,
+                style: {
+                    backgroundColor: '#157fcc'
+                },
+                titleAlign: 'center'
+            },
+            bodyStyle: {
+                backgroundColor: '#f5f5f5',
+                padding: '10px'
+            },
+            html: '这个面板使用了自定义的标题和内容样式。'
+        }, {
+            xtype: 'panel',
+            title: '圆角面板',
+            width: 400,
+            height: 200,
+            margin: 10,
+            frame: true,
+            bodyStyle: {
+                padding: '10px'
+            },
+            html: '这个面板使用了圆角边框样式。'
+        }]
     }],
 
     // 底部说明
@@ -96,15 +174,15 @@ Ext.define('Demo.PanelDemo', {
         items: [{
             xtype: 'component',
             html: '<div class="demo-description">' +
-                '<p><strong>Panel</strong>是ExtJS中最基础和常用的容器组件,它提供了:</p>' +
+                '<p><strong>Panel</strong>面板是ExtJS中最基础的容器组件，提供了丰富的功能:</p>' +
                 '<ul>' +
-                '<li>标题栏和图标</li>' +
-                '<li>可折叠/展开功能</li>' +
-                '<li>工具按钮</li>' +
-                '<li>顶部/底部工具栏</li>' +
-                '<li>自定义样式</li>' +
-                '<li>嵌套其他组件的能力</li>' +
+                '<li>基本面板: 标题、图标等基本功能</li>' +
+                '<li>工具按钮: 在标题栏添加工具按钮</li>' +
+                '<li>折叠面板: 支持面板的折叠/展开</li>' +
+                '<li>面板布局: 灵活的布局方式</li>' +
+                '<li>自定义样式: 支持自定义外观</li>' +
                 '</ul>' +
+                '<p>面板组件是构建复杂界面的基础。</p>' +
                 '</div>'
         }]
     }
