@@ -209,14 +209,27 @@ Ext.onReady(function () {
 
                         // 加载新的demo组件
                         try {
+                            console.log('正在加载组件:', className);
+                            console.log('完整类名:', 'Demo.' + className);
                             var demoComponent = Ext.create('Demo.' + className);
+                            console.log('组件创建成功:', demoComponent);
                             contentPanel.add(demoComponent);
                         } catch (e) {
+                            console.error('加载组件失败:', {
+                                className: className,
+                                error: e,
+                                message: e.message,
+                                stack: e.stack
+                            });
                             contentPanel.add({
                                 xtype: 'panel',
                                 html: '<div class="demo-description">' +
-                                    '<h2>Demo正在开发中...</h2>' +
-                                    '<p>这个演示组件还未实现。</p>' +
+                                    '<h2>组件加载失败</h2>' +
+                                    '<p>加载组件时发生错误。</p>' +
+                                    '<p><strong>组件名称:</strong> ' + className + '</p>' +
+                                    '<p><strong>错误信息:</strong> ' + e.message + '</p>' +
+                                    '<p><strong>错误堆栈:</strong></p>' +
+                                    '<pre>' + e.stack + '</pre>' +
                                     '</div>'
                             });
                         }

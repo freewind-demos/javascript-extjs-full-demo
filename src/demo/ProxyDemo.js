@@ -1,3 +1,17 @@
+// 定义用户模型
+if (!Ext.ClassManager.get('Demo.model.User')) {
+    Ext.define('Demo.model.User', {
+        extend: 'Ext.data.Model',
+        fields: [
+            { name: 'id', type: 'int' },
+            { name: 'name', type: 'string' },
+            { name: 'email', type: 'string' },
+            { name: 'phone', type: 'string' },
+            { name: 'department', type: 'string' }
+        ]
+    });
+}
+
 Ext.define('Demo.ProxyDemo', {
     extend: 'Ext.panel.Panel',
 
@@ -10,19 +24,7 @@ Ext.define('Demo.ProxyDemo', {
 
     bodyPadding: 10,
 
-    // 定义用户模型
     initComponent: function () {
-        Ext.define('Demo.model.User', {
-            extend: 'Ext.data.Model',
-            fields: [
-                { name: 'id', type: 'int' },
-                { name: 'name', type: 'string' },
-                { name: 'email', type: 'string' },
-                { name: 'phone', type: 'string' },
-                { name: 'department', type: 'string' }
-            ]
-        });
-
         this.callParent();
     },
 

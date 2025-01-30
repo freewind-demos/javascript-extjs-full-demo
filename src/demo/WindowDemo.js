@@ -1,7 +1,7 @@
 Ext.define('Demo.WindowDemo', {
     extend: 'Ext.panel.Panel',
 
-    title: 'Window & Dialog 演示',
+    title: 'Window 窗口演示',
 
     layout: {
         type: 'vbox',
@@ -10,40 +10,45 @@ Ext.define('Demo.WindowDemo', {
 
     bodyPadding: 10,
 
-    items: [{
+    defaults: {
         xtype: 'panel',
-        title: '1. 基本窗口',
         margin: '0 0 10 0',
-        bodyPadding: 10,
-        items: [{
-            xtype: 'button',
+        bodyPadding: 10
+    },
+
+    items: [{
+        title: '1. 基本窗口',
+        html: '<p>基本窗口是最简单的浮动窗口，可以自由拖动和调整大小。</p>',
+        buttons: [{
             text: '打开基本窗口',
             handler: function () {
-                Ext.create('Ext.window.Window', {
+                var win = Ext.create('Ext.window.Window', {
                     title: '基本窗口',
                     width: 400,
                     height: 300,
-                    layout: 'fit',
-                    items: [{
-                        xtype: 'panel',
-                        html: '<div style="padding:10px">' +
-                            '<p>这是一个基本窗口示例。</p>' +
-                            '<p>窗口可以拖动、调整大小,并且可以最大化/最小化。</p>' +
-                            '</div>'
-                    }]
-                }).show();
+                    draggable: true,
+                    resizable: true,
+                    modal: false,
+                    html: '<div style="padding: 10px;">' +
+                        '<h3>这是一个基本窗口</h3>' +
+                        '<p>特点：</p>' +
+                        '<ul>' +
+                        '<li>可以拖动</li>' +
+                        '<li>可以调整大小</li>' +
+                        '<li>非模态（不会阻止与其他窗口的交互）</li>' +
+                        '</ul>' +
+                        '</div>'
+                });
+                win.show();
             }
         }]
     }, {
-        xtype: 'panel',
         title: '2. 模态窗口',
-        margin: '0 0 10 0',
-        bodyPadding: 10,
-        items: [{
-            xtype: 'button',
+        html: '<p>模态窗口会阻止用户与其他窗口的交互，直到关闭当前窗口。</p>',
+        buttons: [{
             text: '打开模态窗口',
             handler: function () {
-                Ext.create('Ext.window.Window', {
+                var win = Ext.create('Ext.window.Window', {
                     title: '模态窗口',
                     width: 400,
                     height: 300,
@@ -67,192 +72,132 @@ Ext.define('Demo.WindowDemo', {
                     }],
                     buttons: [{
                         text: '确定',
-                        handler: function () {
-                            var win = this.up('window');
-                            var form = win.down('form');
+                        handler: function (btn) {
+                            var form = btn.up('window').down('form');
                             if (form.isValid()) {
-                                Ext.Msg.alert('成功', '表单验证通过!');
-                                win.close();
+                                Ext.Msg.alert('成功', '表单验证通过！');
+                                btn.up('window').close();
+                            } else {
+                                Ext.Msg.alert('错误', '请填写所有必填字段！');
                             }
                         }
                     }, {
                         text: '取消',
-                        handler: function () {
-                            this.up('window').close();
+                        handler: function (btn) {
+                            btn.up('window').close();
                         }
                     }]
-                }).show();
+                });
+                win.show();
             }
         }]
     }, {
-        xtype: 'panel',
         title: '3. 消息框',
-        margin: '0 0 10 0',
-        bodyPadding: 10,
-        defaults: {
-            xtype: 'button',
-            margin: '0 10 0 0'
-        },
-        items: [{
-            text: '提示框',
-            handler: function () {
-                Ext.Msg.alert('提示', '这是一个简单的提示框');
-            }
-        }, {
+        html: '<p>ExtJS提供了多种预定义的消息框样式。</p>',
+        buttons: [{
             text: '确认框',
             handler: function () {
-                Ext.Msg.confirm('确认', '确定要执行此操作吗?', function (btn) {
+                Ext.Msg.confirm('确认', '确定要执行此操作吗？', function (btn) {
                     if (btn === 'yes') {
-                        Ext.Msg.alert('提示', '您点击了确定按钮');
+                        Ext.Msg.alert('结果', '你选择了确定');
                     }
                 });
             }
         }, {
-            text: '提示输入框',
+            text: '提示框',
             handler: function () {
-                Ext.Msg.prompt('输入', '请输入您的名字:', function (btn, text) {
-                    if (btn === 'ok') {
-                        Ext.Msg.alert('提示', '您输入的是: ' + text);
+                Ext.Msg.alert('提示', '操作已完成！');
+            }
+        }, {
+            text: '警告框',
+            handler: function () {
+                Ext.Msg.show({
+                    title: '警告',
+                    message: '此操作可能有风险，是否继续？',
+                    buttons: Ext.Msg.YESNO,
+                    icon: Ext.Msg.WARNING,
+                    fn: function (btn) {
+                        if (btn === 'yes') {
+                            Ext.Msg.alert('结果', '你选择了继续执行');
+                        }
                     }
                 });
             }
         }, {
-            text: '等待框',
+            text: '错误框',
             handler: function () {
-                Ext.Msg.wait('正在处理,请稍候...', '请稍候');
-
-                // 3秒后关闭等待框
-                Ext.defer(function () {
-                    Ext.Msg.hide();
-                    Ext.Msg.alert('提示', '处理完成!');
-                }, 3000);
+                Ext.Msg.show({
+                    title: '错误',
+                    message: '发生了一个错误！',
+                    buttons: Ext.Msg.OK,
+                    icon: Ext.Msg.ERROR
+                });
             }
         }]
     }, {
-        xtype: 'panel',
-        title: '4. 提示框',
-        margin: '0 0 10 0',
-        bodyPadding: 10,
-        items: [{
-            xtype: 'button',
-            text: '显示工具提示',
-            tooltip: '这是一个简单的工具提示',
-            tooltipType: 'title'
-        }, {
-            xtype: 'button',
-            text: '显示富文本提示',
-            margin: '0 0 0 10',
-            tooltip: {
-                html: '<div style="padding:5px">' +
-                    '<h3>富文本提示</h3>' +
-                    '<p>这是一个支持HTML的提示框</p>' +
-                    '<ul>' +
-                    '<li>可以包含列表</li>' +
-                    '<li>支持样式</li>' +
-                    '</ul>' +
-                    '</div>'
-            }
-        }]
-    }, {
-        xtype: 'panel',
-        title: '5. 自定义窗口',
-        margin: '0 0 10 0',
-        bodyPadding: 10,
-        items: [{
-            xtype: 'button',
+        title: '4. 自定义窗口',
+        html: '<p>可以创建具有自定义布局和功能的窗口。</p>',
+        buttons: [{
             text: '打开自定义窗口',
             handler: function () {
-                // 创建自定义窗口类
-                Ext.define('CustomWindow', {
-                    extend: 'Ext.window.Window',
-
+                var win = Ext.create('Ext.window.Window', {
                     title: '自定义窗口',
                     width: 600,
                     height: 400,
                     modal: true,
                     layout: 'border',
-
-                    // 自定义样式
-                    bodyStyle: {
-                        background: '#f5f5f5'
-                    },
-
-                    // 自定义工具按钮
-                    tools: [{
-                        type: 'help',
-                        tooltip: '帮助',
-                        handler: function () {
-                            Ext.Msg.alert('帮助', '这是帮助内容');
-                        }
-                    }],
-
-                    // 初始化组件
-                    initComponent: function () {
-                        var me = this;
-
-                        Ext.apply(me, {
-                            items: [{
-                                region: 'west',
-                                width: 200,
-                                split: true,
-                                collapsible: true,
-                                title: '导航',
-                                layout: 'fit',
-                                items: [{
-                                    xtype: 'treepanel',
-                                    root: {
-                                        expanded: true,
-                                        children: [{
-                                            text: '选项1',
-                                            leaf: true
-                                        }, {
-                                            text: '选项2',
-                                            leaf: true
-                                        }, {
-                                            text: '选项3',
-                                            expanded: true,
-                                            children: [{
-                                                text: '子选项1',
-                                                leaf: true
-                                            }, {
-                                                text: '子选项2',
-                                                leaf: true
-                                            }]
-                                        }]
-                                    }
-                                }]
+                    items: [{
+                        region: 'west',
+                        width: 200,
+                        split: true,
+                        collapsible: true,
+                        title: '导航菜单',
+                        xtype: 'treepanel',
+                        root: {
+                            text: '根节点',
+                            expanded: true,
+                            children: [{
+                                text: '选项1',
+                                leaf: true
                             }, {
-                                region: 'center',
-                                xtype: 'tabpanel',
-                                items: [{
-                                    title: '标签1',
-                                    padding: 10,
-                                    html: '这是第一个标签页的内容'
+                                text: '选项2',
+                                leaf: true
+                            }, {
+                                text: '选项3',
+                                expanded: true,
+                                children: [{
+                                    text: '子选项1',
+                                    leaf: true
                                 }, {
-                                    title: '标签2',
-                                    padding: 10,
-                                    html: '这是第二个标签页的内容'
+                                    text: '子选项2',
+                                    leaf: true
                                 }]
-                            }],
-                            buttons: [{
-                                text: '保存',
-                                handler: function () {
-                                    Ext.Msg.alert('提示', '点击了保存按钮');
-                                }
-                            }, {
-                                text: '关闭',
-                                handler: function () {
-                                    me.close();
-                                }
                             }]
-                        });
-
-                        me.callParent();
-                    }
+                        }
+                    }, {
+                        region: 'center',
+                        xtype: 'tabpanel',
+                        items: [{
+                            title: '选项卡1',
+                            html: '这是第一个选项卡的内容'
+                        }, {
+                            title: '选项卡2',
+                            html: '这是第二个选项卡的内容'
+                        }]
+                    }],
+                    buttons: [{
+                        text: '保存',
+                        handler: function () {
+                            Ext.Msg.alert('提示', '保存成功！');
+                        }
+                    }, {
+                        text: '关闭',
+                        handler: function (btn) {
+                            btn.up('window').close();
+                        }
+                    }]
                 });
-
-                // 显示自定义窗口
-                Ext.create('CustomWindow').show();
+                win.show();
             }
         }]
     }],
@@ -263,15 +208,13 @@ Ext.define('Demo.WindowDemo', {
         items: [{
             xtype: 'component',
             html: '<div class="demo-description">' +
-                '<p><strong>Window</strong>和<strong>Dialog</strong>组件提供了丰富的功能:</p>' +
+                '<p><strong>Window</strong>组件提供了丰富的窗口功能:</p>' +
                 '<ul>' +
-                '<li>基本窗口: 可拖动、调整大小</li>' +
-                '<li>模态窗口: 阻止与其他界面交互</li>' +
-                '<li>消息框: alert、confirm、prompt等</li>' +
-                '<li>提示框: 简单和富文本提示</li>' +
-                '<li>自定义窗口: 复杂的窗口布局和功能</li>' +
+                '<li>基本窗口: 可拖动、可调整大小的浮动窗口</li>' +
+                '<li>模态窗口: 阻止与其他窗口交互的窗口</li>' +
+                '<li>消息框: 预定义的各种消息提示框</li>' +
+                '<li>自定义窗口: 支持复杂布局和自定义功能</li>' +
                 '</ul>' +
-                '<p>这些组件通常用于显示临时内容、收集用户输入和显示消息。</p>' +
                 '</div>'
         }]
     }

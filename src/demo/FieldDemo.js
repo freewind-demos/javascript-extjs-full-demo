@@ -216,9 +216,20 @@ Ext.define('Demo.FieldDemo', {
                 minValue: 0,
                 maxValue: 100
             }, {
-                xtype: 'colorfield',
-                fieldLabel: '颜色选择器',
-                value: '#FF0000'
+                xtype: 'checkboxfield',
+                fieldLabel: '复选框',
+                boxLabel: '选项1'
+            }, {
+                xtype: 'radiofield',
+                fieldLabel: '单选框',
+                boxLabel: '选项1',
+                name: 'radio1'
+            }, {
+                xtype: 'radiofield',
+                fieldLabel: '',
+                labelSeparator: '',
+                boxLabel: '选项2',
+                name: 'radio1'
             }]
         }]
     }],

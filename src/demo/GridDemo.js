@@ -1,3 +1,21 @@
+// 定义员工模型
+if (!Ext.ClassManager.get('Demo.model.Employee')) {
+    Ext.define('Demo.model.Employee', {
+        extend: 'Ext.data.Model',
+        fields: [
+            { name: 'id', type: 'int' },
+            { name: 'name', type: 'string' },
+            { name: 'age', type: 'int' },
+            { name: 'gender', type: 'string' },
+            { name: 'department', type: 'string' },
+            { name: 'position', type: 'string' },
+            { name: 'salary', type: 'float' },
+            { name: 'joinDate', type: 'date', dateFormat: 'Y-m-d' },
+            { name: 'status', type: 'boolean' }
+        ]
+    });
+}
+
 Ext.define('Demo.GridDemo', {
     extend: 'Ext.panel.Panel',
 
@@ -12,21 +30,6 @@ Ext.define('Demo.GridDemo', {
 
     // 定义用户模型
     initComponent: function () {
-        Ext.define('Demo.model.Employee', {
-            extend: 'Ext.data.Model',
-            fields: [
-                { name: 'id', type: 'int' },
-                { name: 'name', type: 'string' },
-                { name: 'age', type: 'int' },
-                { name: 'gender', type: 'string' },
-                { name: 'department', type: 'string' },
-                { name: 'position', type: 'string' },
-                { name: 'salary', type: 'float' },
-                { name: 'joinDate', type: 'date', dateFormat: 'Y-m-d' },
-                { name: 'status', type: 'boolean' }
-            ]
-        });
-
         this.callParent();
     },
 

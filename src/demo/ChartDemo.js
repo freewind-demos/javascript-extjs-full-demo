@@ -1,3 +1,27 @@
+// 定义销售数据模型
+if (!Ext.ClassManager.get('Demo.model.Sale')) {
+    Ext.define('Demo.model.Sale', {
+        extend: 'Ext.data.Model',
+        fields: [
+            { name: 'month', type: 'string' },
+            { name: 'product1', type: 'int' },
+            { name: 'product2', type: 'int' },
+            { name: 'product3', type: 'int' }
+        ]
+    });
+}
+
+// 定义饼图数据模型
+if (!Ext.ClassManager.get('Demo.model.Market')) {
+    Ext.define('Demo.model.Market', {
+        extend: 'Ext.data.Model',
+        fields: [
+            { name: 'category', type: 'string' },
+            { name: 'value', type: 'int' }
+        ]
+    });
+}
+
 Ext.define('Demo.ChartDemo', {
     extend: 'Ext.panel.Panel',
 
@@ -11,26 +35,6 @@ Ext.define('Demo.ChartDemo', {
     bodyPadding: 10,
 
     initComponent: function () {
-        // 定义销售数据模型
-        Ext.define('Demo.model.Sale', {
-            extend: 'Ext.data.Model',
-            fields: [
-                { name: 'month', type: 'string' },
-                { name: 'product1', type: 'int' },
-                { name: 'product2', type: 'int' },
-                { name: 'product3', type: 'int' }
-            ]
-        });
-
-        // 定义饼图数据模型
-        Ext.define('Demo.model.Market', {
-            extend: 'Ext.data.Model',
-            fields: [
-                { name: 'category', type: 'string' },
-                { name: 'value', type: 'int' }
-            ]
-        });
-
         this.callParent();
     },
 
