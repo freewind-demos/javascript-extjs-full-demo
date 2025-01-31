@@ -131,7 +131,7 @@ Ext.define('Demo.DataDemo', {
                 }],
                 tbar: [{
                     text: '添加',
-                    iconCls: 'x-fa fa-plus',
+                    iconCls: 'fa-solid fa-plus',
                     handler: function () {
                         store.add({
                             id: store.getCount() + 1,
@@ -144,7 +144,7 @@ Ext.define('Demo.DataDemo', {
                     }
                 }, {
                     text: '删除选中',
-                    iconCls: 'x-fa fa-minus',
+                    iconCls: 'fa-solid fa-minus',
                     handler: function () {
                         var selection = this.up('grid').getSelection();
                         if (selection.length > 0) {

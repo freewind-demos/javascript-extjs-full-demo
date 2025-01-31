@@ -27,7 +27,7 @@ Ext.define('Demo.PanelDemo', {
             width: 300,
             height: 150,
             margin: 10,
-            iconCls: 'x-fa fa-star',
+            iconCls: 'fa-solid fa-star',
             html: '这个面板在标题栏有一个图标。'
         }]
     }, {

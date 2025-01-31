@@ -53,23 +53,23 @@ Ext.define('Demo.ButtonDemo', {
             },
             items: [{
                 xtype: 'button',
-                iconCls: 'x-fa fa-plus',
+                iconCls: 'fa-solid fa-plus',
                 text: '添加'
             }, {
                 xtype: 'button',
-                iconCls: 'x-fa fa-edit',
+                iconCls: 'fa-solid fa-pen',
                 text: '编辑'
             }, {
                 xtype: 'button',
-                iconCls: 'x-fa fa-trash',
+                iconCls: 'fa-solid fa-trash-can',
                 text: '删除'
             }, {
                 xtype: 'button',
-                iconCls: 'x-fa fa-search',
+                iconCls: 'fa-solid fa-magnifying-glass',
                 text: '搜索'
             }, {
                 xtype: 'button',
-                iconCls: 'x-fa fa-refresh',
+                iconCls: 'fa-solid fa-arrows-rotate',
                 text: '刷新'
             }]
         }, {
@@ -80,23 +80,23 @@ Ext.define('Demo.ButtonDemo', {
             },
             items: [{
                 xtype: 'button',
-                iconCls: 'x-fa fa-plus',
+                iconCls: 'fa-solid fa-plus',
                 tooltip: '添加'
             }, {
                 xtype: 'button',
-                iconCls: 'x-fa fa-edit',
+                iconCls: 'fa-solid fa-pen',
                 tooltip: '编辑'
             }, {
                 xtype: 'button',
-                iconCls: 'x-fa fa-trash',
+                iconCls: 'fa-solid fa-trash-can',
                 tooltip: '删除'
             }, {
                 xtype: 'button',
-                iconCls: 'x-fa fa-search',
+                iconCls: 'fa-solid fa-magnifying-glass',
                 tooltip: '搜索'
             }, {
                 xtype: 'button',
-                iconCls: 'x-fa fa-refresh',
+                iconCls: 'fa-solid fa-arrows-rotate',
                 tooltip: '刷新'
             }]
         }]
@@ -168,15 +168,15 @@ Ext.define('Demo.ButtonDemo', {
                 items: [{
                     xtype: 'button',
                     text: '新建',
-                    iconCls: 'x-fa fa-file'
+                    iconCls: 'fa-solid fa-file'
                 }, {
                     xtype: 'button',
                     text: '打开',
-                    iconCls: 'x-fa fa-folder-open'
+                    iconCls: 'fa-solid fa-folder-open'
                 }, {
                     xtype: 'button',
                     text: '保存',
-                    iconCls: 'x-fa fa-save'
+                    iconCls: 'fa-solid fa-floppy-disk'
                 }]
             }, {
                 xtype: 'buttongroup',
@@ -189,15 +189,15 @@ Ext.define('Demo.ButtonDemo', {
                 items: [{
                     xtype: 'button',
                     text: '剪切',
-                    iconCls: 'x-fa fa-cut'
+                    iconCls: 'fa-solid fa-scissors'
                 }, {
                     xtype: 'button',
                     text: '复制',
-                    iconCls: 'x-fa fa-copy'
+                    iconCls: 'fa-solid fa-copy'
                 }, {
                     xtype: 'button',
                     text: '粘贴',
-                    iconCls: 'x-fa fa-paste'
+                    iconCls: 'fa-solid fa-paste'
                 }]
             }]
         }]
@@ -214,30 +214,30 @@ Ext.define('Demo.ButtonDemo', {
             items: [{
                 xtype: 'splitbutton',
                 text: '保存',
-                iconCls: 'x-fa fa-save',
+                iconCls: 'fa-solid fa-floppy-disk',
                 menu: [{
                     text: '保存',
-                    iconCls: 'x-fa fa-save'
+                    iconCls: 'fa-solid fa-floppy-disk'
                 }, {
                     text: '另存为...',
-                    iconCls: 'x-fa fa-save'
+                    iconCls: 'fa-solid fa-floppy-disk'
                 }, {
                     text: '保存全部',
-                    iconCls: 'x-fa fa-save'
+                    iconCls: 'fa-solid fa-floppy-disk'
                 }]
             }, {
                 xtype: 'splitbutton',
                 text: '导出',
-                iconCls: 'x-fa fa-download',
+                iconCls: 'fa-solid fa-download',
                 menu: [{
                     text: '导出为PDF',
-                    iconCls: 'x-fa fa-file-pdf'
+                    iconCls: 'fa-solid fa-file-pdf'
                 }, {
                     text: '导出为Excel',
-                    iconCls: 'x-fa fa-file-excel'
+                    iconCls: 'fa-solid fa-file-excel'
                 }, {
                     text: '导出为Word',
-                    iconCls: 'x-fa fa-file-word'
+                    iconCls: 'fa-solid fa-file-word'
                 }]
             }]
         }]

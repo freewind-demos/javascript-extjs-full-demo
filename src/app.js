@@ -1,26 +1,3 @@
-// 定义Todo数据模型
-Ext.define('Todo', {
-    extend: 'Ext.data.Model',
-    fields: [
-        { name: 'id', type: 'int' },
-        { name: 'title', type: 'string' },
-        { name: 'description', type: 'string' },
-        { name: 'status', type: 'string' },
-        { name: 'dueDate', type: 'date' }
-    ]
-});
-
-// 创建并注册全局Store
-Ext.create('Ext.data.Store', {
-    storeId: 'todoStore',
-    model: 'Todo',
-    data: [
-        { id: 1, title: '完成ExtJS Demo', description: '创建一个展示ExtJS特性的Demo', status: '进行中', dueDate: new Date() },
-        { id: 2, title: '学习TypeScript', description: '深入学习TypeScript的高级特性', status: '待开始', dueDate: new Date(2024, 1, 15) },
-        { id: 3, title: '准备会议', description: '准备下周的技术分享会议', status: '已完成', dueDate: new Date(2024, 1, 10) }
-    ]
-});
-
 // 创建主应用界面
 Ext.onReady(function () {
     // 定义demo数据模型

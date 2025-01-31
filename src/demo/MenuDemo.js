@@ -23,16 +23,16 @@ Ext.define('Demo.MenuDemo', {
                 menu: {
                     items: [{
                         text: '新建',
-                        iconCls: 'x-fa fa-file'
+                        iconCls: 'fa-solid fa-file'
                     }, {
                         text: '打开',
-                        iconCls: 'x-fa fa-folder-open'
+                        iconCls: 'fa-solid fa-folder-open'
                     }, {
                         text: '保存',
-                        iconCls: 'x-fa fa-save'
+                        iconCls: 'fa-solid fa-floppy-disk'
                     }, '-', {
                         text: '退出',
-                        iconCls: 'x-fa fa-sign-out'
+                        iconCls: 'fa-solid fa-right-from-bracket'
                     }]
                 }
             }]
@@ -141,16 +141,16 @@ Ext.define('Demo.MenuDemo', {
                         var menu = Ext.create('Ext.menu.Menu', {
                             items: [{
                                 text: '查看',
-                                iconCls: 'x-fa fa-eye'
+                                iconCls: 'fa-solid fa-eye'
                             }, {
                                 text: '编辑',
-                                iconCls: 'x-fa fa-edit'
+                                iconCls: 'fa-solid fa-pen'
                             }, {
                                 text: '删除',
-                                iconCls: 'x-fa fa-trash'
+                                iconCls: 'fa-solid fa-trash-can'
                             }, '-', {
                                 text: '属性',
-                                iconCls: 'x-fa fa-info-circle'
+                                iconCls: 'fa-solid fa-circle-info'
                             }]
                         });
 
@@ -178,16 +178,16 @@ Ext.define('Demo.MenuDemo', {
                             // 动态添加菜单项
                             menu.add([{
                                 text: 'document1.txt',
-                                iconCls: 'x-fa fa-file-text'
+                                iconCls: 'fa-solid fa-file-lines'
                             }, {
                                 text: 'image1.jpg',
-                                iconCls: 'x-fa fa-file-image'
+                                iconCls: 'fa-solid fa-file-image'
                             }, {
                                 text: 'spreadsheet1.xlsx',
-                                iconCls: 'x-fa fa-file-excel'
+                                iconCls: 'fa-solid fa-file-excel'
                             }, '-', {
                                 text: '清除最近打开记录',
-                                iconCls: 'x-fa fa-trash'
+                                iconCls: 'fa-solid fa-trash-can'
                             }]);
                         }
                     }

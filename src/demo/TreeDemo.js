@@ -22,27 +22,27 @@ Ext.define('Demo.TreeDemo', {
                 expanded: true,
                 children: [{
                     text: '文件夹1',
-                    iconCls: 'x-fa fa-folder',
+                    iconCls: 'fa-solid fa-folder',
                     expanded: true,
                     children: [{
                         text: '文件1.txt',
-                        iconCls: 'x-fa fa-file-text',
+                        iconCls: 'fa-solid fa-file-lines',
                         leaf: true
                     }, {
                         text: '文件2.doc',
-                        iconCls: 'x-fa fa-file-word',
+                        iconCls: 'fa-solid fa-file-word',
                         leaf: true
                     }]
                 }, {
                     text: '文件夹2',
-                    iconCls: 'x-fa fa-folder',
+                    iconCls: 'fa-solid fa-folder',
                     children: [{
                         text: '文件3.xls',
-                        iconCls: 'x-fa fa-file-excel',
+                        iconCls: 'fa-solid fa-file-excel',
                         leaf: true
                     }, {
                         text: '文件4.pdf',
-                        iconCls: 'x-fa fa-file-pdf',
+                        iconCls: 'fa-solid fa-file-pdf',
                         leaf: true
                     }]
                 }]

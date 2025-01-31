@@ -43,19 +43,19 @@ Ext.define('Demo.ToolbarDemo', {
                 margin: '0 0 10 0',
                 tbar: [{
                     text: '新建',
-                    iconCls: 'x-fa fa-plus',
+                    iconCls: 'fa-solid fa-plus',
                     handler: function () {
                         Ext.Msg.alert('提示', '点击了新建按钮');
                     }
                 }, {
                     text: '编辑',
-                    iconCls: 'x-fa fa-edit',
+                    iconCls: 'fa-solid fa-pen',
                     handler: function () {
                         Ext.Msg.alert('提示', '点击了编辑按钮');
                     }
                 }, {
                     text: '删除',
-                    iconCls: 'x-fa fa-minus',
+                    iconCls: 'fa-solid fa-minus',
                     handler: function () {
                         Ext.Msg.alert('提示', '点击了删除按钮');
                     }
@@ -65,7 +65,7 @@ Ext.define('Demo.ToolbarDemo', {
                     width: 200
                 }, {
                     xtype: 'button',
-                    iconCls: 'x-fa fa-search'
+                    iconCls: 'fa-solid fa-magnifying-glass'
                 }],
                 html: '<div style="padding:10px">工具栏示例</div>'
             }, {
@@ -101,13 +101,13 @@ Ext.define('Demo.ToolbarDemo', {
                     menu: {
                         items: [{
                             text: '新建文件',
-                            iconCls: 'x-fa fa-file'
+                            iconCls: 'fa-solid fa-file'
                         }, {
                             text: '打开文件',
-                            iconCls: 'x-fa fa-folder-open'
+                            iconCls: 'fa-solid fa-folder-open'
                         }, '-', {
                             text: '保存',
-                            iconCls: 'x-fa fa-save'
+                            iconCls: 'fa-solid fa-floppy-disk'
                         }]
                     }
                 }, {
@@ -115,13 +115,13 @@ Ext.define('Demo.ToolbarDemo', {
                     menu: {
                         items: [{
                             text: '剪切',
-                            iconCls: 'x-fa fa-cut'
+                            iconCls: 'fa-solid fa-scissors'
                         }, {
                             text: '复制',
-                            iconCls: 'x-fa fa-copy'
+                            iconCls: 'fa-solid fa-copy'
                         }, {
                             text: '粘贴',
-                            iconCls: 'x-fa fa-paste'
+                            iconCls: 'fa-solid fa-paste'
                         }]
                     }
                 }, {
@@ -129,13 +129,13 @@ Ext.define('Demo.ToolbarDemo', {
                     menu: {
                         items: [{
                             text: '放大',
-                            iconCls: 'x-fa fa-search-plus'
+                            iconCls: 'fa-solid fa-magnifying-glass-plus'
                         }, {
                             text: '缩小',
-                            iconCls: 'x-fa fa-search-minus'
+                            iconCls: 'fa-solid fa-magnifying-glass-minus'
                         }, '-', {
                             text: '实际大小',
-                            iconCls: 'x-fa fa-compress'
+                            iconCls: 'fa-solid fa-compress-arrows-alt'
                         }]
                     }
                 }],
@@ -153,13 +153,13 @@ Ext.define('Demo.ToolbarDemo', {
                             Ext.create('Ext.menu.Menu', {
                                 items: [{
                                     text: '查看',
-                                    iconCls: 'x-fa fa-eye'
+                                    iconCls: 'fa-solid fa-eye'
                                 }, {
                                     text: '编辑',
-                                    iconCls: 'x-fa fa-edit'
+                                    iconCls: 'fa-solid fa-pen'
                                 }, '-', {
                                     text: '删除',
-                                    iconCls: 'x-fa fa-trash'
+                                    iconCls: 'fa-solid fa-trash-can'
                                 }]
                             }).showAt(e.getXY());
                         });
